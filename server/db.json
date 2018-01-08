@@ -1,6 +1,5 @@
 {
   "login": {
-    "password": "ttt",
-    "username": "rr"
+    "access_token": "access_token"
   }
 }
