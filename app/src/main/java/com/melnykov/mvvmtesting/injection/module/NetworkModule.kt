@@ -1,8 +1,8 @@
 package com.melnykov.mvvmtesting.injection.module
 
+import com.melnykov.mvvmtesting.data.remote.ApiService
 import dagger.Module
 import dagger.Provides
-import com.melnykov.mvvmtesting.data.remote.ApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -11,7 +11,7 @@ class NetworkModule {
     @Provides
     fun provideApiService(): ApiService {
         val retrofit = Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:3000")
+                .baseUrl("https://33dca1b7-a837-4a2d-b989-fdf9c6646798.mock.pstmn.io")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         return retrofit.create(ApiService::class.java)
