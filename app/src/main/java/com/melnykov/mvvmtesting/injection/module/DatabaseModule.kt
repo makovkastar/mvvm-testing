@@ -16,7 +16,6 @@ class DatabaseModule {
                 application, AppDatabase::class.java, "mvvm-testing.db").build()
     }
 
-    @Singleton
     @Provides
     fun provideUserDao(db: AppDatabase) = db.userDao()
 }
