@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--suppress AndroidUnknownAttribute -->
+    <data class="LoginFragmentBinding">
+        <variable
+            name="viewModel"
+            type="com.melnykov.mvvmtesting.ui.login.LoginViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.melnykov.mvvmtesting.ui.login.LoginFragment">
+
+        <EditText
+            android:id="@+id/edit_text_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/login_hint_username"
+            android:inputType="textEmailAddress"
+            android:text="@={viewModel.usernameField}"
+            app:addTextChangedListener="@{viewModel.usernameTextChangedListener}"
+            app:layout_constraintBottom_toTopOf="@+id/edit_text_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <EditText
+            android:id="@+id/edit_text_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/login_hint_password"
+            android:inputType="textPassword"
+            android:text="@={viewModel.passwordField}"
+            app:addTextChangedListener="@{viewModel.passwordTextChangedListener}"
+            app:layout_constraintBottom_toTopOf="@+id/button_log_in"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_username" />
+
+        <Button
+            android:id="@+id/button_log_in"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:enabled="@{viewModel.isLogInButtonEnabled}"
+            android:onClick="@{() -> viewModel.onLoginButtonClicked()}"
+            android:text="@string/login_button_log_in"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_password" />
+
+        <TextView
+            android:id="@+id/label_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:onClick="@{() -> viewModel.onForgotPasswordLabelClicked()}"
+            android:text="@string/login_label_forgot_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_log_in" />
+
+        <FrameLayout
+            android:id="@+id/progress_overlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/progress_bar_overlay"
+            android:clickable="true"
+            android:elevation="@dimen/progress_overlay_elevation"
+            android:focusable="true"
+            android:visibility="@{viewModel.isProgressBarVisible()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="UnusedAttribute">
+
+            <ProgressBar
+                android:layout_width="@dimen/progress_bar_overlay_size"
+                android:layout_height="@dimen/progress_bar_overlay_size"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>
