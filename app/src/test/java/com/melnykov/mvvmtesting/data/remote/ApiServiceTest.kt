@@ -1,5 +1,6 @@
 package com.melnykov.mvvmtesting.data.remote
 
+import com.melnykov.mvvmtesting.data.model.User
 import com.melnykov.mvvmtesting.data.remote.request.LoginRequest
 import com.melnykov.mvvmtesting.data.remote.response.LoginResponse
 import okhttp3.mockwebserver.MockResponse
@@ -7,6 +8,7 @@ import okhttp3.mockwebserver.MockWebServer
 import okio.Okio
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue
 import org.junit.After
 import org.junit.Before
@@ -58,6 +60,8 @@ class ApiServiceTest {
 
         assertThat(loginResponse, notNullValue())
         assertThat(loginResponse!!.accessToken, `is`("access_token"))
+        assertThat(loginResponse.user, equalTo(User(
+                "makovkastar", "Oleksandr", "Melnykov", "https://github.com/makovkastar")))
     }
 
     private fun enqueueResponse(fileName: String) {

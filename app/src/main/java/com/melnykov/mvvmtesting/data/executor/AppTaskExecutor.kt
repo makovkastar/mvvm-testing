@@ -28,14 +28,14 @@ object AppTaskExecutor : TaskExecutor {
     }
 }
 
-fun network(task: () -> Unit) {
+inline fun network(crossinline task: () -> Unit) {
     AppTaskExecutor.executeOnNetworkIO(Runnable { task() })
 }
 
-fun disk(task: () -> Unit) {
+inline fun disk(crossinline task: () -> Unit) {
     AppTaskExecutor.executeOnDiskIO(Runnable { task() })
 }
 
-fun ui(task: () -> Unit) {
+inline fun ui(crossinline task: () -> Unit) {
     AppTaskExecutor.executeOnMainThread(Runnable { task() })
 }
