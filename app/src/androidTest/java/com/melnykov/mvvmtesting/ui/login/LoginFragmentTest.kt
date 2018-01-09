@@ -75,8 +75,8 @@ class LoginFragmentTest {
     @Mock
     private lateinit var passwordTextChangedListener: TextWatcher
 
-    val usernameField = ObservableField<String>()
-    val passwordField = ObservableField<String>()
+    private val usernameField = ObservableField<String>()
+    private val passwordField = ObservableField<String>()
 
     private val isLogInButtonEnabled = ObservableBoolean()
     private val isProgressBarVisible = ObservableBoolean()
@@ -116,13 +116,13 @@ class LoginFragmentTest {
     }
 
     @Test
-    fun clickForgotPasswordButton_CallsViewModel() {
+    fun clickForgotPasswordLabel_CallsViewModel() {
         onView(withId(R.id.label_forgot_password)).perform(click())
         verify(viewModel).onForgotPasswordLabelClicked()
     }
 
     @Test
-    fun clickLoginButton_CallsViewModel() {
+    fun clickLogInButton_CallsViewModel() {
         isLogInButtonEnabled.set(true)
 
         onView(withId(R.id.button_log_in)).perform(click())

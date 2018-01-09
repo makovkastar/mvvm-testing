@@ -35,7 +35,7 @@ object Injector {
             }
 
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                if (activity is HasSupportFragmentInjector) {
+                if (activity is HasSupportFragmentInjector && activity is Injectable) {
                     AndroidInjection.inject(activity)
                 }
                 if (activity is FragmentActivity) {

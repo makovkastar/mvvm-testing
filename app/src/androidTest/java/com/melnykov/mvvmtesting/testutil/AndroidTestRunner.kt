@@ -8,7 +8,7 @@ import com.melnykov.mvvmtesting.AndroidTestApplication
 
 class AndroidTestRunner : AndroidJUnitRunner() {
 
-    override fun newApplication(cl: ClassLoader?, className: String?, context: Context?): Application {
+    override fun newApplication(cl: ClassLoader, className: String, context: Context): Application {
         DexOpener.install(this)
         return super.newApplication(cl, AndroidTestApplication::class.java.name, context)
     }
