@@ -1,15 +1,37 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.3.11'
+    ext.versions = [
+        'minSdk'          : 19,
+        'targetSdk'       : 28,
+        'compileSdk'      : 28,
+
+        'androidPlugin'   : '3.2.1',
+        'kotlin'          : '1.3.11',
+        'ktlint'          : '0.29.0',
+        'supportLibrary'  : '28.0.0',
+        'constraintLayout': '1.1.3',
+        'archComponents'  : '1.1.1',
+        'dagger'          : '2.16',
+        'okhttp'          : '3.10.0',
+        'retrofit'        : '2.4.0',
+        'junit'           : '4.12',
+        'hamcrest'        : '1.3',
+        'mockito'         : '2.19.0',
+        'espresso'        : '3.0.2',
+        'testRunner'      : '1.0.2',
+        'jacoco'          : '0.8.2'
+    ]
+
     repositories {
         google()
         jcenter()
     }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
+        classpath "com.android.tools.build:gradle:${versions.androidPlugin}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:${versions.kotlin}"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -21,6 +43,13 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+    }
+}
+
+subprojects {
+    afterEvaluate {
+        project.apply from: '../quality/ktlint.gradle'
+        tasks.findByName('check').dependsOn('ktlint')
     }
 }
 
