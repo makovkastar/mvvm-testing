@@ -32,7 +32,11 @@ class LoginViewModel @Inject constructor(private val loginGateway: LoginGateway)
 
     fun onLoginButtonClicked() {
         isProgressBarVisible.set(true)
-        loginGateway.login(usernameField.get(), passwordField.get(), LoginCallbacks())
+        loginGateway.login(
+            checkNotNull(usernameField.get()),
+            checkNotNull(passwordField.get()),
+            LoginCallbacks()
+        )
     }
 
     fun onForgotPasswordLabelClicked() {
@@ -57,7 +61,7 @@ class LoginViewModel @Inject constructor(private val loginGateway: LoginGateway)
 
     private fun validateInputFields() {
         isLogInButtonEnabled.set(!usernameField.get().isNullOrBlank()
-                && !passwordField.get().isNullOrBlank())
+            && !passwordField.get().isNullOrBlank())
     }
 
     inner class LoginCallbacks : LoginGateway.LoginCallbacks {
