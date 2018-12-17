@@ -57,8 +57,8 @@ class LoginViewModel @Inject constructor(private val loginGateway: LoginGateway)
     }
 
     private fun validateInputFields() {
-        isLogInButtonEnabled.set(!usernameField.get().isNullOrBlank()
-            && !passwordField.get().isNullOrBlank())
+        isLogInButtonEnabled.set(!usernameField.get().isNullOrBlank() &&
+            !passwordField.get().isNullOrBlank())
     }
 
     inner class LoginCallbacks : LoginGateway.LoginCallbacks {

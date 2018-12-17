@@ -14,7 +14,8 @@ import javax.inject.Inject
 
 class LoginGatewayImpl @Inject constructor(
     private val apiService: ApiService,
-    private val userDao: UserDao) : LoginGateway {
+    private val userDao: UserDao
+) : LoginGateway {
 
     override fun login(username: String, password: String, callbacks: LoginGateway.LoginCallbacks) {
         network {

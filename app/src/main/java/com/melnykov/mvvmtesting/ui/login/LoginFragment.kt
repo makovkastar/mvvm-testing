@@ -36,10 +36,13 @@ class LoginFragment : Fragment(), Injectable {
             .get(LoginViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         dataBinding = LoginFragmentBinding.inflate(
-            inflater, container, false);
+            inflater, container, false)
         dataBinding.viewModel = viewModel
         return dataBinding.root
     }
