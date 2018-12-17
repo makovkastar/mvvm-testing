@@ -38,9 +38,8 @@ class LoginFragment : Fragment(), Injectable {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_login, container, false)
-        dataBinding = LoginFragmentBinding.bind(rootView)
-
+        dataBinding = LoginFragmentBinding.inflate(
+            inflater, container, false);
         dataBinding.viewModel = viewModel
         return dataBinding.root
     }
