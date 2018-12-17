@@ -58,7 +58,7 @@ class LoginFragment : Fragment(), Injectable {
 
         viewModel.navigateToNextScreen.observe(this, Observer {
             startHomeActivity()
-            activity.finish()
+            activity?.finish()
         })
     }
 

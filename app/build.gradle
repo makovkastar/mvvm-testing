@@ -9,7 +9,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'jacoco'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -18,7 +18,7 @@ android {
     defaultConfig {
         applicationId "com.melnykov.mvvmtesting"
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "com.melnykov.mvvmtesting.testutil.AndroidTestRunner"
@@ -46,7 +46,7 @@ jacoco {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
     implementation "android.arch.lifecycle:extensions:1.1.1"
@@ -71,12 +71,12 @@ dependencies {
     testImplementation 'android.arch.core:core-testing:1.1.1'
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
 
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
     androidTestImplementation 'org.mockito:mockito-android:2.17.0'
-    androidTestImplementation 'android.arch.core:core-testing:1.1.0'
+    androidTestImplementation 'android.arch.core:core-testing:1.1.1'
     androidTestCompile 'com.github.tmurakami:dexopener:0.12.1'
 }
 

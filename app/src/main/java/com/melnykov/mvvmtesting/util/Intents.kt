@@ -17,7 +17,7 @@ fun Activity.startBrowser(url: String) {
     }
 }
 
-fun Fragment.startBrowser(url: String) = activity.startBrowser(url)
+fun Fragment.startBrowser(url: String) = activity?.startBrowser(url)
 
 fun Context.isIntentAvailable(intent: Intent): Boolean {
     val activities = packageManager.queryIntentActivities(
