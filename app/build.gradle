@@ -14,15 +14,26 @@ android {
     compileSdkVersion versions.compileSdk
 
     sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+        main {
+            java.srcDirs += 'src/main/kotlin'
+        }
+        test {
+            java.srcDirs += 'src/test/kotlin'
+        }
+        androidTest {
+            java.srcDirs += 'src/androidTest/kotlin'
+        }
     }
 
     defaultConfig {
         applicationId "com.melnykov.mvvmtesting"
+
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
+
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "com.melnykov.mvvmtesting.testutil.AndroidTestRunner"
     }
 
