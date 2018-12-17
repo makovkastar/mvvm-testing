@@ -166,7 +166,7 @@ class LoginViewModelTest {
     @Test
     fun clickForgotPasswordLabel_NavigatesToForgotPasswordPage() {
         viewModel.navigateToForgotPasswordPage.observeForever(
-                navigateToForgotPasswordPageObserver)
+            navigateToForgotPasswordPageObserver)
 
         viewModel.onForgotPasswordLabelClicked()
 

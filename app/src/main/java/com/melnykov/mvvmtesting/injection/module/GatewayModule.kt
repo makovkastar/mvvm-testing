@@ -1,9 +1,9 @@
 package com.melnykov.mvvmtesting.injection.module
 
-import dagger.Binds
-import dagger.Module
 import com.melnykov.mvvmtesting.data.gateway.LoginGateway
 import com.melnykov.mvvmtesting.data.gateway.LoginGatewayImpl
+import dagger.Binds
+import dagger.Module
 
 @Module
 interface GatewayModule {

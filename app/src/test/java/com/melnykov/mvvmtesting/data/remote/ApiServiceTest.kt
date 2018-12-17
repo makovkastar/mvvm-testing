@@ -31,10 +31,10 @@ class ApiServiceTest {
     fun setUp() {
         mockWebServer = MockWebServer()
         apiService = Retrofit.Builder()
-                .baseUrl(mockWebServer.url("/"))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(ApiService::class.java)
+            .baseUrl(mockWebServer.url("/"))
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiService::class.java)
     }
 
     @After
@@ -47,28 +47,28 @@ class ApiServiceTest {
         enqueueResponse("login.json")
 
         val response: Response<LoginResponse> = apiService.login(
-                LoginRequest("username", "password")).execute()
+            LoginRequest("username", "password")).execute()
         val loginResponse: LoginResponse? = response.body()
 
         val recordedRequest = mockWebServer.takeRequest()
         assertThat(recordedRequest.path, `is`("/login"))
 
         assertThat(recordedRequest.body.readUtf8(),
-                `is`("{\"username\":\"username\",\"password\":\"password\"}"))
+            `is`("{\"username\":\"username\",\"password\":\"password\"}"))
 
         assertThat(response.isSuccessful, `is`(true))
 
         assertThat(loginResponse, notNullValue())
         assertThat(loginResponse!!.accessToken, `is`("access_token"))
         assertThat(loginResponse.user, equalTo(User(
-                "makovkastar", "Oleksandr", "Melnykov", "https://github.com/makovkastar")))
+            "makovkastar", "Oleksandr", "Melnykov", "https://github.com/makovkastar")))
     }
 
     private fun enqueueResponse(fileName: String) {
         val inputStream = javaClass.classLoader.getResourceAsStream(
-                "api-response/" + fileName)
+            "api-response/" + fileName)
         val source = Okio.buffer(Okio.source(inputStream))
         mockWebServer.enqueue(MockResponse()
-                .setBody(source.readString(StandardCharsets.UTF_8)))
+            .setBody(source.readString(StandardCharsets.UTF_8)))
     }
 }

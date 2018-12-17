@@ -21,6 +21,6 @@ fun Fragment.startBrowser(url: String) = activity?.startBrowser(url)
 
 fun Context.isIntentAvailable(intent: Intent): Boolean {
     val activities = packageManager.queryIntentActivities(
-            intent, PackageManager.MATCH_DEFAULT_ONLY)
+        intent, PackageManager.MATCH_DEFAULT_ONLY)
     return activities.size > 0
 }

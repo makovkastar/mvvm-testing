@@ -13,14 +13,14 @@ import java.io.IOException
 import javax.inject.Inject
 
 class LoginGatewayImpl @Inject constructor(
-        private val apiService: ApiService,
-        private val userDao: UserDao) : LoginGateway {
+    private val apiService: ApiService,
+    private val userDao: UserDao) : LoginGateway {
 
     override fun login(username: String, password: String, callbacks: LoginGateway.LoginCallbacks) {
         network {
             try {
                 val loginResponse: Response<LoginResponse> = apiService.login(
-                        LoginRequest(username, password)).execute()
+                    LoginRequest(username, password)).execute()
                 if (loginResponse.isSuccessful) {
                     val responseBody = loginResponse.body()
                     if (responseBody != null) {

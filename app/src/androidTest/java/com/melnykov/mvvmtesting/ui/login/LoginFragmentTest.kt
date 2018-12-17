@@ -134,12 +134,12 @@ class LoginFragmentTest {
     fun navigateToForgotPasswordPage_StartsBrowser() {
         // We assume that an emulator or device has a browser installed.
         intending(not(isInternal())).respondWith(
-                Instrumentation.ActivityResult(Activity.RESULT_OK, null))
+            Instrumentation.ActivityResult(Activity.RESULT_OK, null))
 
         navigateToForgotPasswordPage.call()
 
         intended(allOf(hasAction(Intent.ACTION_VIEW),
-                hasData(Urls.FORGOT_PASSWORD)))
+            hasData(Urls.FORGOT_PASSWORD)))
     }
 
     @Test
@@ -153,7 +153,7 @@ class LoginFragmentTest {
     fun showErrorToast_ShowsToastWithCorrectText() {
         showErrorToast.value = R.string.general_toast_no_application_available
         onView(withText(R.string.general_toast_no_application_available))
-                .inRoot(isToast()).check(matches(isDisplayed()))
+            .inRoot(isToast()).check(matches(isDisplayed()))
     }
 
     @Test
@@ -171,7 +171,7 @@ class LoginFragmentTest {
     @Test
     fun usernameTextChangedListenerBinding() {
         onView(withId(R.id.edit_text_username)).perform(
-                typeText("username"), closeSoftKeyboard())
+            typeText("username"), closeSoftKeyboard())
 
         verify(usernameTextChangedListener, times(8)).afterTextChanged(any())
     }
@@ -179,7 +179,7 @@ class LoginFragmentTest {
     @Test
     fun passwordTextChangedListenerBinding() {
         onView(withId(R.id.edit_text_password)).perform(
-                typeText("password"), closeSoftKeyboard())
+            typeText("password"), closeSoftKeyboard())
 
         verify(passwordTextChangedListener, times(8)).afterTextChanged(any())
     }
@@ -187,7 +187,7 @@ class LoginFragmentTest {
     @Test
     fun usernameFieldBinding() {
         onView(withId(R.id.edit_text_username)).perform(
-                typeText("username"), closeSoftKeyboard())
+            typeText("username"), closeSoftKeyboard())
 
         assertThat(usernameField.get(), `is`("username"))
     }
@@ -195,7 +195,7 @@ class LoginFragmentTest {
     @Test
     fun passwordFieldBinding() {
         onView(withId(R.id.edit_text_password)).perform(
-                typeText("password"), closeSoftKeyboard())
+            typeText("password"), closeSoftKeyboard())
 
         assertThat(passwordField.get(), `is`("password"))
     }

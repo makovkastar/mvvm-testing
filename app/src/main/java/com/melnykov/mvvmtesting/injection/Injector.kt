@@ -40,13 +40,13 @@ object Injector {
                 }
                 if (activity is FragmentActivity) {
                     activity.supportFragmentManager.registerFragmentLifecycleCallbacks(
-                            object : FragmentManager.FragmentLifecycleCallbacks() {
-                                override fun onFragmentPreAttached(fm: FragmentManager, f: Fragment, context: Context) {
-                                    if (f is Injectable) {
-                                        AndroidSupportInjection.inject(f)
-                                    }
+                        object : FragmentManager.FragmentLifecycleCallbacks() {
+                            override fun onFragmentPreAttached(fm: FragmentManager, f: Fragment, context: Context) {
+                                if (f is Injectable) {
+                                    AndroidSupportInjection.inject(f)
                                 }
-                            }, true)
+                            }
+                        }, true)
                 }
             }
         })

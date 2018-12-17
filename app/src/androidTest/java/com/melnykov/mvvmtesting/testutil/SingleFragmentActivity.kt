@@ -7,7 +7,7 @@ class SingleFragmentActivity : AppCompatActivity() {
 
     fun setFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-                .add(android.R.id.content, fragment)
-                .commit()
+            .add(android.R.id.content, fragment)
+            .commit()
     }
 }

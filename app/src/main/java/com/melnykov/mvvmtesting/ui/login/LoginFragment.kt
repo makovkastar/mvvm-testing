@@ -33,7 +33,7 @@ class LoginFragment : Fragment(), Injectable {
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(LoginViewModel::class.java)
+            .get(LoginViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

@@ -41,7 +41,7 @@ class IntentsTest {
 
     private fun mockQueryIntentActivities(hasMatchingActivities: Boolean) {
         `when`(packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY))
-                .thenReturn(if (hasMatchingActivities) listOf(resolveInfo) else emptyList())
+            .thenReturn(if (hasMatchingActivities) listOf(resolveInfo) else emptyList())
         `when`(context.packageManager).thenReturn(packageManager)
     }
 }

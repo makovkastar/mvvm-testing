@@ -13,7 +13,7 @@ abstract class DatabaseTest {
     @Before
     fun setUp() {
         db = Room.inMemoryDatabaseBuilder(
-                InstrumentationRegistry.getContext(), AppDatabase::class.java).build()
+            InstrumentationRegistry.getContext(), AppDatabase::class.java).build()
     }
 
     @After

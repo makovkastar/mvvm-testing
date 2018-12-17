@@ -9,8 +9,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .add(android.R.id.content, LoginFragment())
-                    .commit()
+                .add(android.R.id.content, LoginFragment())
+                .commit()
         }
     }
 }

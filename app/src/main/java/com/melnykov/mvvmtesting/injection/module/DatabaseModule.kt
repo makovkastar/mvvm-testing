@@ -13,7 +13,7 @@ class DatabaseModule {
     @Provides
     fun provideDatabase(application: Application): AppDatabase {
         return Room.databaseBuilder(
-                application, AppDatabase::class.java, "mvvm-testing.db").build()
+            application, AppDatabase::class.java, "mvvm-testing.db").build()
     }
 
     @Provides

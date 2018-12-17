@@ -50,7 +50,7 @@ class LoginGatewayImplTest {
     fun login_ExecutesLoginApiCall() {
         `when`(apiService.login(any())).thenReturn(call)
         `when`(call.execute()).thenReturn(Response.success(
-                LoginResponse("access_token", user)))
+            LoginResponse("access_token", user)))
 
         loginGateway.login("username", "password", loginCallbacks)
 
@@ -65,7 +65,7 @@ class LoginGatewayImplTest {
     fun loginSuccess_CallsOnLoginSuccessCallback() {
         `when`(apiService.login(any())).thenReturn(call)
         `when`(call.execute()).thenReturn(Response.success(LoginResponse(
-                "access_token", user)))
+            "access_token", user)))
 
         loginGateway.login("username", "password", loginCallbacks)
 
@@ -77,7 +77,7 @@ class LoginGatewayImplTest {
     fun loginSuccess_InsertsUserIntoDatabase() {
         `when`(apiService.login(any())).thenReturn(call)
         `when`(call.execute()).thenReturn(Response.success(LoginResponse(
-                "access_token", user)))
+            "access_token", user)))
 
         loginGateway.login("username", "password", loginCallbacks)
 
@@ -100,7 +100,7 @@ class LoginGatewayImplTest {
     fun loginInvalidCredentials_CallsOnLoginErrorCallback() {
         `when`(apiService.login(any())).thenReturn(call)
         `when`(call.execute()).thenReturn(Response.error(401, ResponseBody.create(
-                MediaType.parse("application/json"), "Invalid credentials")))
+            MediaType.parse("application/json"), "Invalid credentials")))
 
         loginGateway.login("username", "password", loginCallbacks)
 
