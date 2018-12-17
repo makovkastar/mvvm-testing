@@ -17,20 +17,15 @@ class LoginViewModel @Inject constructor(private val loginGateway: LoginGateway)
     val usernameField = ObservableField<String>()
     val passwordField = ObservableField<String>()
 
-    val isLogInButtonEnabled = ObservableBoolean()
+    val isLogInButtonEnabled = ObservableBoolean(false)
 
-    val isProgressBarVisible = ObservableBoolean()
+    val isProgressBarVisible = ObservableBoolean(false)
 
     val navigateToForgotPasswordPage = SingleLiveEvent<Unit>()
 
     val navigateToNextScreen = SingleLiveEvent<Unit>()
 
     val showErrorToast = SingleLiveEvent<Int>()
-
-    init {
-        isLogInButtonEnabled.set(false)
-        isProgressBarVisible.set(false)
-    }
 
     fun onLoginButtonClicked() {
         isProgressBarVisible.set(true)
