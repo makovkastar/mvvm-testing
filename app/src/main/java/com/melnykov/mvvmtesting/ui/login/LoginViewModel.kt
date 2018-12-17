@@ -5,11 +5,13 @@ import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.text.Editable
 import android.text.TextWatcher
+import com.melnykov.mvvmtesting.OpenForTesting
 import com.melnykov.mvvmtesting.data.gateway.LoginGateway
 import com.melnykov.mvvmtesting.util.SingleLiveEvent
 import com.melnykov.mvvmtesting.util.TextWatcherAdapter
 import javax.inject.Inject
 
+@OpenForTesting
 class LoginViewModel @Inject constructor(private val loginGateway: LoginGateway) : ViewModel() {
 
     val usernameField = ObservableField<String>()

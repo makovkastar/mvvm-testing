@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: "kotlin-allopen"
+
 apply plugin: 'jacoco'
 
 android {
@@ -37,6 +39,10 @@ android {
     dataBinding {
         enabled = true
     }
+}
+
+allOpen {
+    annotation 'com.melnykov.mvvmtesting.OpenClass'
 }
 
 jacoco {
@@ -77,7 +83,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
     androidTestImplementation 'org.mockito:mockito-android:2.19.0'
     androidTestImplementation 'android.arch.core:core-testing:1.1.1'
-    androidTestCompile 'com.github.tmurakami:dexopener:0.12.1'
 }
 
 

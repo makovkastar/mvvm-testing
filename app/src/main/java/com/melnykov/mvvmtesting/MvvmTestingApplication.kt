@@ -1,9 +1,9 @@
 package com.melnykov.mvvmtesting
 
-import dagger.android.AndroidInjector
-import dagger.android.support.DaggerApplication
 import com.melnykov.mvvmtesting.injection.Injector
 import com.melnykov.mvvmtesting.injection.component.DaggerAppComponent
+import dagger.android.AndroidInjector
+import dagger.android.support.DaggerApplication
 
 class MvvmTestingApplication : DaggerApplication() {
 
