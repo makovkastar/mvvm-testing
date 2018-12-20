@@ -66,7 +66,7 @@ class ApiServiceTest {
 
     private fun enqueueResponse(fileName: String) {
         val inputStream = javaClass.classLoader.getResourceAsStream(
-            "api-response/" + fileName)
+            "api-response/$fileName")
         val source = Okio.buffer(Okio.source(inputStream))
         mockWebServer.enqueue(MockResponse()
             .setBody(source.readString(StandardCharsets.UTF_8)))

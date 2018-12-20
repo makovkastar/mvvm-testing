@@ -207,7 +207,7 @@ class LoginFragmentTest {
                     @Suppress("UNCHECKED_CAST")
                     return viewModel as T
                 }
-                throw IllegalArgumentException("Unknown view model class " + viewModelClass)
+                throw IllegalArgumentException("Unknown view model class $viewModelClass")
             }
         }
     }
