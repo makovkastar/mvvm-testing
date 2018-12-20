@@ -6,9 +6,7 @@ import com.melnykov.mvvmtesting.data.executor.ui
 import com.melnykov.mvvmtesting.data.local.dao.UserDao
 import com.melnykov.mvvmtesting.data.model.User
 import com.melnykov.mvvmtesting.data.remote.ApiService
-import com.melnykov.mvvmtesting.data.remote.request.LoginRequest
-import com.melnykov.mvvmtesting.data.remote.response.LoginResponse
-import retrofit2.Response
+import com.melnykov.mvvmtesting.data.remote.request.LoginRequestBody
 import java.io.IOException
 import javax.inject.Inject
 
@@ -20,10 +18,10 @@ class LoginGatewayImpl @Inject constructor(
     override fun login(username: String, password: String, callbacks: LoginGateway.LoginCallbacks) {
         network {
             try {
-                val loginResponse: Response<LoginResponse> = apiService.login(
-                    LoginRequest(username, password)).execute()
-                if (loginResponse.isSuccessful) {
-                    val responseBody = loginResponse.body()
+                val response = apiService.login(
+                    LoginRequestBody(username, password)).execute()
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
                     if (responseBody != null) {
                         disk {
                             saveAccessToken(responseBody.accessToken)

@@ -3,8 +3,8 @@ package com.melnykov.mvvmtesting.data.gateway
 import com.melnykov.mvvmtesting.data.local.dao.UserDao
 import com.melnykov.mvvmtesting.data.model.User
 import com.melnykov.mvvmtesting.data.remote.ApiService
-import com.melnykov.mvvmtesting.data.remote.request.LoginRequest
-import com.melnykov.mvvmtesting.data.remote.response.LoginResponse
+import com.melnykov.mvvmtesting.data.remote.request.LoginRequestBody
+import com.melnykov.mvvmtesting.data.remote.response.LoginResponseBody
 import com.melnykov.mvvmtesting.testutil.InstantTaskExecutorRule
 import com.melnykov.mvvmtesting.testutil.any
 import okhttp3.MediaType
@@ -36,7 +36,7 @@ class LoginGatewayImplTest {
     private lateinit var userDao: UserDao
 
     @Mock
-    private lateinit var call: Call<LoginResponse>
+    private lateinit var call: Call<LoginResponseBody>
 
     @Mock
     private lateinit var loginCallbacks: LoginGateway.LoginCallbacks
@@ -47,14 +47,14 @@ class LoginGatewayImplTest {
     private val user = User("makovkastar", "Oleksandr", "Melnykov", "https://github.com/makovkastar")
 
     @Test
-    fun login_ExecutesLoginApiCall() {
+    fun login_ExecutesCorrectApiCall() {
         `when`(apiService.login(any())).thenReturn(call)
         `when`(call.execute()).thenReturn(Response.success(
-            LoginResponse("access_token", user)))
+            LoginResponseBody("access_token", user)))
 
         loginGateway.login("username", "password", loginCallbacks)
 
-        verify(apiService).login(LoginRequest("username", "password"))
+        verify(apiService).login(LoginRequestBody("username", "password"))
         verify(call).execute()
 
         verifyNoMoreInteractions(apiService)
@@ -64,7 +64,7 @@ class LoginGatewayImplTest {
     @Test
     fun loginSuccess_CallsOnLoginSuccessCallback() {
         `when`(apiService.login(any())).thenReturn(call)
-        `when`(call.execute()).thenReturn(Response.success(LoginResponse(
+        `when`(call.execute()).thenReturn(Response.success(LoginResponseBody(
             "access_token", user)))
 
         loginGateway.login("username", "password", loginCallbacks)
@@ -76,7 +76,7 @@ class LoginGatewayImplTest {
     @Test
     fun loginSuccess_InsertsUserIntoDatabase() {
         `when`(apiService.login(any())).thenReturn(call)
-        `when`(call.execute()).thenReturn(Response.success(LoginResponse(
+        `when`(call.execute()).thenReturn(Response.success(LoginResponseBody(
             "access_token", user)))
 
         loginGateway.login("username", "password", loginCallbacks)
