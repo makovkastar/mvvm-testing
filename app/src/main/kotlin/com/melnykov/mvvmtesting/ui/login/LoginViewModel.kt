@@ -7,12 +7,20 @@ import android.text.Editable
 import android.text.TextWatcher
 import com.melnykov.mvvmtesting.OpenForTesting
 import com.melnykov.mvvmtesting.data.gateway.LoginGateway
+import com.melnykov.mvvmtesting.data.gateway.LoginResult
+import com.melnykov.mvvmtesting.injection.qualifier.UiContext
 import com.melnykov.mvvmtesting.util.SingleLiveEvent
 import com.melnykov.mvvmtesting.util.TextWatcherAdapter
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 @OpenForTesting
-class LoginViewModel @Inject constructor(private val loginGateway: LoginGateway) : ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val loginGateway: LoginGateway,
+    @UiContext private val uiContext: CoroutineContext
+) : ViewModel() {
 
     val usernameField = ObservableField<String>()
     val passwordField = ObservableField<String>()
@@ -27,13 +35,23 @@ class LoginViewModel @Inject constructor(private val loginGateway: LoginGateway)
 
     val showErrorToast = SingleLiveEvent<Int>()
 
-    fun onLoginButtonClicked() {
+    fun onLoginButtonClicked() = GlobalScope.launch(uiContext) {
         isProgressBarVisible.set(true)
-        loginGateway.login(
+
+        val result = loginGateway.login(
             checkNotNull(usernameField.get()),
-            checkNotNull(passwordField.get()),
-            LoginCallbacks()
+            checkNotNull(passwordField.get())
         )
+
+        when (result) {
+            is LoginResult.Success -> {
+                navigateToNextScreen.call()
+            }
+            is LoginResult.Error -> {
+                isProgressBarVisible.set(false)
+                showErrorToast.call()
+            }
+        }
     }
 
     fun onForgotPasswordLabelClicked() {
@@ -59,17 +77,5 @@ class LoginViewModel @Inject constructor(private val loginGateway: LoginGateway)
     private fun validateInputFields() {
         isLogInButtonEnabled.set(!usernameField.get().isNullOrBlank() &&
             !passwordField.get().isNullOrBlank())
-    }
-
-    inner class LoginCallbacks : LoginGateway.LoginCallbacks {
-
-        override fun onLoginSuccess() {
-            navigateToNextScreen.call()
-        }
-
-        override fun onLoginError() {
-            isProgressBarVisible.set(false)
-            showErrorToast.call()
-        }
     }
 }

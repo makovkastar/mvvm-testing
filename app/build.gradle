@@ -88,6 +88,9 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
     implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
 
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.kotlinCoroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.kotlinCoroutines"
+
     testImplementation "junit:junit:${versions.junit}"
     testImplementation "org.hamcrest:hamcrest-all:${versions.hamcrest}"
     testImplementation "org.mockito:mockito-core:${versions.mockito}"

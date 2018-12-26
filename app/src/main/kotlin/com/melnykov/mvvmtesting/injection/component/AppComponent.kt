@@ -2,11 +2,7 @@ package com.melnykov.mvvmtesting.injection.component
 
 import android.app.Application
 import com.melnykov.mvvmtesting.MvvmTestingApplication
-import com.melnykov.mvvmtesting.injection.module.DatabaseModule
-import com.melnykov.mvvmtesting.injection.module.FragmentModule
-import com.melnykov.mvvmtesting.injection.module.GatewayModule
-import com.melnykov.mvvmtesting.injection.module.NetworkModule
-import com.melnykov.mvvmtesting.injection.module.ViewModelModule
+import com.melnykov.mvvmtesting.injection.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -15,6 +11,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
+    AppModule::class,
     DatabaseModule::class,
     FragmentModule::class,
     ViewModelModule::class,

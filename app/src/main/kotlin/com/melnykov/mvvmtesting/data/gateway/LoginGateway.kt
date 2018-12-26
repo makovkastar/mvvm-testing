@@ -1,15 +1,10 @@
 package com.melnykov.mvvmtesting.data.gateway
 
-import android.support.annotation.MainThread
-
 interface LoginGateway {
-    fun login(username: String, password: String, callbacks: LoginCallbacks)
+    suspend fun login(username: String, password: String): LoginResult
+}
 
-    interface LoginCallbacks {
-        @MainThread
-        fun onLoginSuccess()
-
-        @MainThread
-        fun onLoginError()
-    }
+sealed class LoginResult {
+    object Success : LoginResult()
+    object Error : LoginResult()
 }

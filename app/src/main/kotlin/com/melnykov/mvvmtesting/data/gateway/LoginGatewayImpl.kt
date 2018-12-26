@@ -1,55 +1,44 @@
 package com.melnykov.mvvmtesting.data.gateway
 
-import com.melnykov.mvvmtesting.data.executor.disk
-import com.melnykov.mvvmtesting.data.executor.network
-import com.melnykov.mvvmtesting.data.executor.ui
 import com.melnykov.mvvmtesting.data.local.dao.UserDao
 import com.melnykov.mvvmtesting.data.model.User
 import com.melnykov.mvvmtesting.data.remote.ApiService
 import com.melnykov.mvvmtesting.data.remote.request.LoginRequestBody
+import com.melnykov.mvvmtesting.injection.qualifier.BgContext
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 class LoginGatewayImpl @Inject constructor(
     private val apiService: ApiService,
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    @BgContext private val bgContext: CoroutineContext
 ) : LoginGateway {
 
-    override fun login(username: String, password: String, callbacks: LoginGateway.LoginCallbacks) {
-        network {
-            try {
-                val response = apiService.login(
-                    LoginRequestBody(username, password)).execute()
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        disk {
-                            saveAccessToken(responseBody.accessToken)
-                            saveUser(responseBody.user)
-                            notifyOnLoginSuccess(callbacks)
-                        }
-                    } else {
-                        notifyOnLoginError(callbacks)
-                    }
-                } else {
-                    notifyOnLoginError(callbacks)
+    override suspend fun login(
+        username: String,
+        password: String
+    ) = withContext(bgContext) {
+        try {
+            val response = apiService.login(
+                LoginRequestBody(username, password)).execute()
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    saveAccessToken(responseBody.accessToken)
+                    saveUser(responseBody.user)
+                    return@withContext LoginResult.Success
                 }
-            } catch (e: IOException) {
-                notifyOnLoginError(callbacks)
-                e.printStackTrace()
             }
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
-    }
-
-    private fun notifyOnLoginSuccess(callbacks: LoginGateway.LoginCallbacks) {
-        ui { callbacks.onLoginSuccess() }
-    }
-
-    private fun notifyOnLoginError(callbacks: LoginGateway.LoginCallbacks) {
-        ui { callbacks.onLoginError() }
+        return@withContext LoginResult.Error
     }
 
     private fun saveAccessToken(accessToken: String) {
+        // TODO: Persist the access token.
     }
 
     private fun saveUser(user: User) {

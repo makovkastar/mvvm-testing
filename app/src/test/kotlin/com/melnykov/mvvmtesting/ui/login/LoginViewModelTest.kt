@@ -3,18 +3,19 @@ package com.melnykov.mvvmtesting.ui.login
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
 import com.melnykov.mvvmtesting.data.gateway.LoginGateway
+import com.melnykov.mvvmtesting.data.gateway.LoginResult
 import com.melnykov.mvvmtesting.testutil.any
-import com.melnykov.mvvmtesting.testutil.capture
 import com.melnykov.mvvmtesting.testutil.eq
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentCaptor
-import org.mockito.Captor
-import org.mockito.InjectMocks
 import org.mockito.Mock
+import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.verifyNoMoreInteractions
 import org.mockito.junit.MockitoJUnitRunner
@@ -25,9 +26,6 @@ class LoginViewModelTest {
     @Rule
     @JvmField
     val taskExecutorRule = InstantTaskExecutorRule()
-
-    @InjectMocks
-    private lateinit var viewModel: LoginViewModel
 
     @Mock
     private lateinit var loginGateway: LoginGateway
@@ -41,8 +39,12 @@ class LoginViewModelTest {
     @Mock
     private lateinit var showErrorToastObserver: Observer<Int>
 
-    @Captor
-    private lateinit var loginCallbacks: ArgumentCaptor<LoginGateway.LoginCallbacks>
+    private lateinit var viewModel: LoginViewModel
+
+    @Before
+    fun setUp() {
+        viewModel = LoginViewModel(loginGateway, Dispatchers.Unconfined)
+    }
 
     @Test
     fun logInButtonIsDisabledInitially() {
@@ -113,51 +115,51 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun clickLogInButton_CallsLoginGateway() {
+    fun clickLogInButton_CallsLoginGateway() = runBlocking<Unit> {
         fillLoginCredentials()
 
         viewModel.onLoginButtonClicked()
 
-        verify(loginGateway).login(eq("username"), eq("password"), any())
+        verify(loginGateway).login(eq("username"), eq("password"))
     }
 
     @Test
-    fun clickLogInButton_HidesProgressBarOnLoginError() {
+    fun clickLogInButton_HidesProgressBarOnLoginError() = runBlocking {
         fillLoginCredentials()
 
-        viewModel.onLoginButtonClicked()
+        `when`(loginGateway.login(any(), any()))
+            .thenReturn(LoginResult.Error)
 
-        verify(loginGateway).login(any(), any(), capture(loginCallbacks))
-        loginCallbacks.value.onLoginError()
+        viewModel.onLoginButtonClicked()
 
         assertThat(viewModel.isProgressBarVisible.get(), `is`(false))
     }
 
     @Test
-    fun clickLoginButton_NavigatesToNextScreenOnLoginSuccess() {
+    fun clickLoginButton_NavigatesToNextScreenOnLoginSuccess() = runBlocking {
         fillLoginCredentials()
 
         viewModel.navigateToNextScreen.observeForever(navigateToNextScreenObserver)
 
-        viewModel.onLoginButtonClicked()
+        `when`(loginGateway.login(any(), any()))
+            .thenReturn(LoginResult.Success)
 
-        verify(loginGateway).login(any(), any(), capture(loginCallbacks))
-        loginCallbacks.value.onLoginSuccess()
+        viewModel.onLoginButtonClicked()
 
         verify(navigateToNextScreenObserver).onChanged(null)
         verifyNoMoreInteractions(navigateToNextScreenObserver)
     }
 
     @Test
-    fun clickLoginButton_ShowsErrorToastOnLoginError() {
+    fun clickLoginButton_ShowsErrorToastOnLoginError() = runBlocking {
         fillLoginCredentials()
 
         viewModel.showErrorToast.observeForever(showErrorToastObserver)
 
-        viewModel.onLoginButtonClicked()
+        `when`(loginGateway.login(any(), any()))
+            .thenReturn(LoginResult.Error)
 
-        verify(loginGateway).login(any(), any(), capture(loginCallbacks))
-        loginCallbacks.value.onLoginError()
+        viewModel.onLoginButtonClicked()
 
         verify(showErrorToastObserver).onChanged(null)
         verifyNoMoreInteractions(showErrorToastObserver)
